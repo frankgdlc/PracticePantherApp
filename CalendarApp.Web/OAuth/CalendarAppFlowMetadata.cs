@@ -19,8 +19,8 @@ namespace CalendarApp.Web.OAuth
                     ClientId = "947385166904-bu6qe86d48kem7qc3gsfi8rol7t5u6su.apps.googleusercontent.com",
                     ClientSecret = "n_ZTlxHHi69ZKjA9jE404-y4"
                 },
-                Scopes = new[] { CalendarService.Scope.CalendarReadonly },
-                DataStore = new LocalDbDataStore()
+                Scopes = new[] { CalendarService.Scope.CalendarReadonly }, // Only needs read access to the user's calendar.
+                DataStore = new LocalDbDataStore() // Use custom DataStore implementation.
             });
         }
 
@@ -28,6 +28,7 @@ namespace CalendarApp.Web.OAuth
 
         public override string GetUserId(Controller controller)
         {
+            // Use the user's email as the key to the DataStore to keep record of each user's authorization and refresh token obtained from Google.
             return controller.User.Identity.Name;
         }
     }

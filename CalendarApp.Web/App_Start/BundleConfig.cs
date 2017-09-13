@@ -32,10 +32,9 @@ namespace CalendarApp.Web
                       "~/Content/site.css"));
 
             // Kendo UI (CSS files)
-            bundles.Add(new StyleBundle("~/Content/kendo-css").Include(
+            bundles.Add(new StyleBundle("~/Content/kendo").Include(
                       "~/Content/kendo/kendo.common.min.css",
                       "~/Content/kendo/kendo.default.min.css"));
-
         }
     }
 }

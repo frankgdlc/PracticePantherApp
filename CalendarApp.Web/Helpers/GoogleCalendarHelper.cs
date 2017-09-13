@@ -11,6 +11,11 @@ namespace CalendarApp.Web.Helpers
 {
     public class GoogleCalendarHelper
     {
+        /// <summary>
+        /// Queries the logged user's Google Calendar and fetches all the events for the next 30 days.
+        /// </summary>
+        /// <param name="credential"></param>
+        /// <returns></returns>
         public static IEnumerable<Event> FetchEvents(UserCredential credential)
         {
             // Create Google Calendar API service.
@@ -36,6 +41,12 @@ namespace CalendarApp.Web.Helpers
                 : Enumerable.Empty<Event>();
         }
 
+        /// <summary>
+        /// Creates a simple version of the Google Calendar event with only the basic information to store in the local database and to show in the grid.
+        /// </summary>
+        /// <param name="source">Google Calendar event instance</param>
+        /// <param name="owner">User</param>
+        /// <returns>Local event instance</returns>
         public static CalendarEvent Convert(Event source, string owner)
         {
             var result = new CalendarEvent

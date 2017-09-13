@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 
 namespace CalendarApp.Web.OAuth
 {
+    /// <summary>
+    /// Simple key-value pair model to store the user tokens.
+    /// </summary>
     public class Item
     {
         [Key]
@@ -18,6 +21,9 @@ namespace CalendarApp.Web.OAuth
         public string Value { get; set; }
     }
 
+    /// <summary>
+    /// Entity Framework DbContext that serves as underlying support to the DataStore.
+    /// </summary>
     public class OAuthContext : DbContext
     {
         public OAuthContext() : base("DefaultConnection") {}
@@ -25,6 +31,9 @@ namespace CalendarApp.Web.OAuth
         public DbSet<Item> Items { get; set; }
     }
 
+    /// <summary>
+    /// Custom DataStore implementation that uses the local database to store the auth and refresh tokens. Used by the <see cref="CalendarAppFlowMetadata"/>.
+    /// </summary>
     public class LocalDbDataStore : IDataStore
     {
         private static string GenerateStoredKey(string key, Type t) => $"{t.FullName}-{key}";

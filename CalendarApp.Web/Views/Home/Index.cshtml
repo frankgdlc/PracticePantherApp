@@ -30,14 +30,14 @@ else
             dataSource: {
                 transport: {
                     read: {
-                        url: "/Home/Index?dataOnly=true",
+                        url: "/Home/Index",
                         dataType: "json"
                     }
                 },
                 schema: {
                     model: {
                         fields: {
-                            StartDate: { type: "date" },
+                            StartDate: { type: "date" }, // To allow the deserialization of the actual date value from the JSON string received.
                             EndDate: { type: "date" }
                         }
                     }
@@ -49,8 +49,7 @@ else
                 { field: "StartDate", width: "200px", title: "Start Date", format: "{0:d}" },
                 { field: "EndDate", width: "200px", title: "End Date", format: "{0:d}" }
             ],
-            toolbar: [{ name: "refresh", text: "Refresh", iconClass: "k-icon k-i-refresh" }],
-            pageSize: 10
+            toolbar: [{ name: "refresh", text: "Refresh", iconClass: "k-icon k-i-refresh" }]
         });
 
         // Wire-up the Refresh button
