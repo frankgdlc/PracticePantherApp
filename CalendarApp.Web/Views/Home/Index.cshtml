@@ -1,0 +1,66 @@
+﻿@model CalendarApp.Web.Models.HomeIndexViewModel
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron">
+    <h2>Google Calendar Sync</h2>
+</div>
+@if (User.Identity.IsAuthenticated)
+{
+    if (Model.RedirectUri == null)
+    {
+        <div id="calendar-grid"></div>
+    }
+    else
+    {
+        <p><a href="@Model.RedirectUri" class="btn btn-primary">Connect Google account</a></p>
+    }
+}
+else
+{
+    <p>You need to be authenticated in the app in order to view the events from your Google Calendar. Please login using the link in the top right corner.</p>
+}
+
+<script>
+    $(document).ready(function () {
+        //TODO: Initialize kendo grid
+        $("#calendar-grid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/Home/Index?dataOnly=true",
+                        dataType: "json"
+                    }
+                },
+                schema: {
+                    model: {
+                        fields: {
+                            StartDate: { type: "date" },
+                            EndDate: { type: "date" }
+                        }
+                    }
+                }
+            },
+            columns: [
+                { field: "Summary", width: "200px" },
+                { field: "Description", width: "300px" },
+                { field: "StartDate", width: "200px", title: "Start Date", format: "{0:d}" },
+                { field: "EndDate", width: "200px", title: "End Date", format: "{0:d}" }
+            ],
+            toolbar: [{ name: "refresh", text: "Refresh", iconClass: "k-icon k-i-refresh" }],
+            pageSize: 10
+        });
+
+        // Wire-up the Refresh button
+        $(".k-grid-refresh").kendoButton({
+            icon: "refresh",
+            click: function (e) {
+                e.preventDefault();
+                $("#calendar-grid").data("kendoGrid").dataSource.read();
+            }
+        });
+    });
+    //# sourceURL=Index.js
+</script>
